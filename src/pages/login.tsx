@@ -4,9 +4,10 @@ import Image from "next/image";
 import React from "react";
 import LogoRemoveBg from "../../public/logo-removebg.png";
 import HeroImg from "../../public/hero-img-1.png";
+import FormInput from "@/components/FormInput";
 const Login = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-y-hidden">
       <div className="flex flex-col w-6/12 bg-white h-full">
         <div className="p-8">
           <Image src={LogoRemoveBg} alt="logo" className="w-24" />
@@ -17,45 +18,23 @@ const Login = () => {
           </div>
           <div className="flex flex-col items-center space-y-1">
             <form className="w-full max-w-md space-y-6">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
+              <FormInput
+                label="Email"
+                id="email"
+                placeholder="Masukkan Email"
+                type="email"
+                autoComplete="email"
+                required={true}
+              />
 
-              <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Password
-                  </label>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
+              <FormInput
+                label="Password"
+                id="password"
+                placeholder="Masukkan Password"
+                type="password"
+                autoComplete="current-password"
+                required={true}
+              />
 
               <div>
                 <button
@@ -68,7 +47,7 @@ const Login = () => {
             </form>
 
             <p className="mt-10 text-center text-sm text-gray-500">
-              Belum punya akun?
+              Belum punya akun? &nbsp;
               <a
                 href="/register"
                 className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
