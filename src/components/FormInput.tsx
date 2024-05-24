@@ -1,6 +1,4 @@
-// form.tsx
-
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 interface Props {
   label: string;
@@ -9,6 +7,8 @@ interface Props {
   type?: string;
   autoComplete?: string;
   required?: boolean;
+  value?: string;
+  onChange?: (value: any) => void;
 }
 
 const FormInput: React.FC<Props> = ({
@@ -18,7 +18,13 @@ const FormInput: React.FC<Props> = ({
   type = "text",
   autoComplete = "off",
   required = false,
+  value = "",
+  onChange = () => {},
 }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -31,6 +37,8 @@ const FormInput: React.FC<Props> = ({
       </div>
       <div className="mt-2">
         <input
+          value={value}
+          onChange={handleChange}
           placeholder={placeholder}
           id={id}
           name={id}

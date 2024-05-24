@@ -5,11 +5,20 @@ import React from "react";
 import LogoRemoveBg from "../../public/logo-removebg.png";
 import HeroImg from "../../public/hero-img-1.png";
 import FormInput from "@/components/FormInput";
+import Button from "@/components/Button";
+import { useRouter } from "next/router";
 const Register = () => {
+  const router = useRouter();
+  const backLandingPage = () => {
+    router.push("/");
+  };
+  const handleRegister = () => {
+    router.push("/login");
+  };
   return (
     <div className="flex h-screen overflow-y-hidden">
       <div className="flex flex-col w-6/12 bg-white h-full">
-        <div className="p-8">
+        <div className="p-8" onClick={backLandingPage}>
           <Image src={LogoRemoveBg} alt="logo" className="w-24" />
         </div>
         <div className="px-8 py-16">
@@ -94,12 +103,7 @@ const Register = () => {
                 </div>
               </div>
               <div className="my-6">
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in
-                </button>
+                <Button onClick={handleRegister}>Register</Button>
               </div>
             </form>
 

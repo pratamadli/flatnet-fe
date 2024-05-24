@@ -1,11 +1,25 @@
-"use server";
+// src/pages/login.tsx
 
-import Image from "next/image";
-import React from "react";
-import LogoRemoveBg from "../../public/logo-removebg.png";
-import HeroImg from "../../public/hero-img-1.png";
-import FormInput from "@/components/FormInput";
+import React, { useState } from 'react';
+import { useAuth } from '@/utils/AuthContext';
+import Image from 'next/image';
+import LogoRemoveBg from '../../public/logo-removebg.png';
+import HeroImg from '../../public/hero-img-1.png';
+import FormInput from '@/components/FormInput';
+import Button from '@/components/Button';
+
 const Login = () => {
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // Replace this with your actual login logic
+    login('admin');
+  };
+  
+
   return (
     <div className="flex h-screen overflow-y-hidden">
       <div className="flex flex-col w-6/12 bg-white h-full">
@@ -17,7 +31,7 @@ const Login = () => {
             <h2 className="text-3xl font-semibold text-gray-900">Login</h2>
           </div>
           <div className="flex flex-col items-center space-y-1">
-            <form className="w-full max-w-md space-y-6">
+            <form className="w-full max-w-md space-y-6" >
               <FormInput
                 label="Email"
                 id="email"
@@ -25,6 +39,8 @@ const Login = () => {
                 type="email"
                 autoComplete="email"
                 required={true}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <FormInput
@@ -34,15 +50,12 @@ const Login = () => {
                 type="password"
                 autoComplete="current-password"
                 required={true}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in
-                </button>
+                <Button onClick={handleLogin}>Sign In</Button>
               </div>
             </form>
 
