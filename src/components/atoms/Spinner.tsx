@@ -28,4 +28,4 @@ const Spinner = ({ size = 24, className = "" }: SpinnerProps) => {
   );
 };
 
-export default Spinner;
+export { Spinner };

@@ -5,4 +5,4 @@ const Image = (props: NextImageProps) => {
   return <NextImage {...props} />;
 };
 
-export default Image;
+export { Image };

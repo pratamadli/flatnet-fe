@@ -7,7 +7,7 @@ interface IconProps {
 }
 
 const Icon = ({ name, size = 24, className = "" }: IconProps) => {
-  return <i className={`icon-${name} ${className}`} style={{ fontSize: size }} />;
+  return <i className={`icon-${name} ${className}`} style={{ fontSize: size }} aria-hidden="true" />;
 };
 
-export default Icon;
+export  {Icon};

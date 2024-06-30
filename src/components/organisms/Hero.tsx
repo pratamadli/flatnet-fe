@@ -1,7 +1,5 @@
 "use server";
-import Image from "next/image";
-import { Background } from "../background/Background";
-import LogoRemoveBg from "../../public/logo-removebg.png";
+import { Background, Logo } from "../atoms";
 
 const Hero = () => {
   return (
@@ -21,7 +19,7 @@ const Hero = () => {
         </div>
         <div className="mx-auto max-w-2xl py-28 sm:py-42 lg:py-48">
           <div className="text-center">
-            <Image src={LogoRemoveBg} alt={"LOGO"} />
+            <Logo />
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Layanan Broadband Fiber Optik memberikan akses internet tanpa
               batas berkecepatan tinggi dengan biaya yang terjangkau.

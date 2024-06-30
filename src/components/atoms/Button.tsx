@@ -1,11 +1,36 @@
 import React, { ReactNode, MouseEvent } from "react";
-
+import colors from "@/styles/colors";
 interface ButtonProps {
   children: ReactNode;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   width?: "quarter" | "half" | "three-quarters" | "full";
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  ariaLabel?: string; // Optional icon size
+  icon?: ReactNode;
+  justify?:
+    | "start"
+    | "normal"
+    | "end"
+    | "center"
+    | "between"
+    | "around"
+    | "evenly"
+    | "stretch";
+  items?: "start" | "end" | "center" | "baseline" | "stretch";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "success"
+    | "warning"
+    | "light"
+    | "midgray"
+    | "darkgray"
+    | "black";
+  textColor?: string;
 }
 
 const Button = ({
@@ -14,10 +39,18 @@ const Button = ({
   className = "",
   size = "md",
   width = "full",
+  href,
+  type = "button",
+  ariaLabel,
+  icon,
+  justify = "center",
+  items = "center",
+  variant = "primary",
+  textColor,
 }: ButtonProps) => {
   let buttonSizeClass = "px-3 py-1.5 text-sm leading-6";
   let widthClass = "w-full";
-
+  let variantClass = `bg-${colors[variant]} ${textColor ? `text-${textColor}` : variant === "light" ? "text-black" : `text-${colors.light}`} hover:bg-${colors[variant]}-dark focus:bg-${colors[variant]}-dark`;
   switch (size) {
     case "xs":
       buttonSizeClass = "px-2 py-1 text-xs leading-4";
@@ -54,14 +87,26 @@ const Button = ({
       break;
   }
 
+  const commonProps = {
+    className: `flex items-${items} justify-${justify} rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${buttonSizeClass} ${widthClass} ${variantClass} ${className}`,
+    "aria-label": ariaLabel,
+  };
+
+  if (href) {
+    return (
+      <a href={href} {...commonProps}>
+        {icon && <span className="mr-2">{icon}</span>}
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <button
-      onClick={onClick}
-      className={`flex justify-center rounded-md bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${buttonSizeClass} ${widthClass} ${className}`}
-    >
+    <button type={type} onClick={onClick} {...commonProps}>
+      {icon && <span className="mr-2">{icon}</span>}
       {children}
     </button>
   );
 };
 
-export default Button;
+export { Button };

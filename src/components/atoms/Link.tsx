@@ -17,4 +17,4 @@ const Link = ({ href, children, className = "" }: LinkProps) => {
   );
 };
 
-export default Link;
+export { Link };

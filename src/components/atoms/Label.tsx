@@ -1,7 +1,7 @@
 import React from "react";
 
 interface LabelProps {
-  htmlFor: string;
+  htmlFor?: string;
   children: React.ReactNode;
   className?: string;
 }
@@ -14,4 +14,4 @@ const Label = ({ htmlFor, children, className = "" }: LabelProps) => {
   );
 };
 
-export default Label;
+export {Label};
