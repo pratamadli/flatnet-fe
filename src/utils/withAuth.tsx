@@ -9,13 +9,13 @@ const withAuth = (WrappedComponent: React.ComponentType, requiredRole: string) =
 
     useEffect(() => {
       if (!user) {
-        router.push('/login');
-      } else if (user.role !== requiredRole) {
+        router.push('/auth/login');
+      } else if (user.roleName !== requiredRole) {
         router.push('/unauthorized'); // Create an unauthorized page to handle this case
       }
-    }, [user]);
+    }, [user, router, requiredRole]);
 
-    if (!user || user.role !== requiredRole) {
+    if (!user || user.roleName !== requiredRole) {
       return null;
     }
 

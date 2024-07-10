@@ -12,9 +12,7 @@ const registerApi = async (payload: RegisterPayload) => {
   return await axios.post(`${apiUrl}/auth/register`, payload);
 };
 
-const getAuthApi = async () => {
-  const token = localStorage.getItem("access_token");
-
+const getAuthApi = async (token: string) => {
   if (!token) {
     throw new Error("No access token found");
   }

@@ -1,5 +1,6 @@
 import React, { ReactNode, MouseEvent } from "react";
 import colors from "@/styles/colors";
+import { Icon } from "./Icon";
 interface ButtonProps {
   children: ReactNode;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -9,7 +10,7 @@ interface ButtonProps {
   href?: string;
   type?: "button" | "submit" | "reset";
   ariaLabel?: string; // Optional icon size
-  icon?: ReactNode;
+  icon?: string;
   justify?:
     | "start"
     | "normal"
@@ -42,7 +43,7 @@ const Button = ({
   href,
   type = "button",
   ariaLabel,
-  icon,
+  icon = "",
   justify = "center",
   items = "center",
   variant = "primary",
@@ -88,22 +89,32 @@ const Button = ({
   }
 
   const commonProps = {
-    className: `flex items-${items} justify-${justify} rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${buttonSizeClass} ${widthClass} ${variantClass} ${className}`,
+    className: `flex items-${items} justify-${justify} rounded-md shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${buttonSizeClass} ${widthClass} ${variantClass} ${className}`,
     "aria-label": ariaLabel,
   };
 
   if (href) {
     return (
-      <a href={href} {...commonProps}>
-        {icon && <span className="mr-2">{icon}</span>}
-        {children}
-      </a>
+      <button onClick={onClick}>
+        <a href={href} {...commonProps}>
+          {icon && (
+            <span className="mr-2">
+              <Icon name={icon} />
+            </span>
+          )}
+          {children}
+        </a>
+      </button>
     );
   }
 
   return (
     <button type={type} onClick={onClick} {...commonProps}>
-      {icon && <span className="mr-2">{icon}</span>}
+      {icon && (
+        <span className="mr-2">
+          <Icon name={icon} />
+        </span>
+      )}
       {children}
     </button>
   );

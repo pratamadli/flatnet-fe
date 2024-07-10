@@ -1,5 +1,5 @@
 export interface LoginPayload {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -11,6 +11,8 @@ export interface RegisterPayload {
   noTelp: string;
   alamat: string;
 }
+
+export interface LogoutPayload {}
 
 export interface ReturnState {
   success: boolean;

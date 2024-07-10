@@ -8,7 +8,7 @@ import { Button, Form, Image, Logo } from "@/components/atoms";
 import { FormInput } from "@/components/molecules";
 import { registerThunk } from "@/redux/thunk/authThunk";
 import { useAppDispatch } from "@/redux/hooks";
-import { error } from "console";
+
 const Register = () => {
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
@@ -19,8 +19,6 @@ const Register = () => {
     password: "",
     alamat: "",
   });
-
-  const [invalid, setInvalid] = useState(false);
   const [errorAlamat, setErrorAlamat] = useState({
     error: false,
     errorMessage: "",
@@ -58,60 +56,59 @@ const Register = () => {
   };
 
   const validation = () => {
+    setErrorAlamat({ error: false, errorMessage: "" });
+    setErrorEmail({ error: false, errorMessage: "" });
+    setErrorNama({ error: false, errorMessage: "" });
+    setErrorNik({ error: false, errorMessage: "" });
+    setErrorNoTelp({ error: false, errorMessage: "" });
+    setErrorPassword({ error: false, errorMessage: "" });
     let invalidCount = 0;
     if (formData.alamat === null || formData.alamat === "") {
-      setInvalid(true);
       setErrorAlamat({ error: true, errorMessage: "Alamat is required" });
       invalidCount = invalidCount + 1;
     }
 
     if (formData.nama === null || formData.nama === "") {
-      setInvalid(true);
       setErrorNama({ error: true, errorMessage: "Nama is required" });
       invalidCount = invalidCount + 1;
     }
 
     if (formData.email === null || formData.email === "") {
-      setInvalid(true);
       setErrorEmail({ error: true, errorMessage: "Email is required" });
       invalidCount = invalidCount + 1;
     }
 
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setInvalid(true);
       setErrorEmail({ error: true, errorMessage: "Invalid email format" });
       invalidCount = invalidCount + 1;
     }
 
     if (formData.nik === null || formData.nik === "") {
-      setInvalid(true);
       setErrorNik({ error: true, errorMessage: "NIK is required" });
       invalidCount = invalidCount + 1;
     }
 
     if (!/^\d{16}$/.test(formData.nik)) {
-      setInvalid(true);
       setErrorNik({ error: true, errorMessage: "NIK should be 16 digits" });
       invalidCount = invalidCount + 1;
     }
 
     if (formData.password === null || formData.password === "") {
-      setInvalid(true);
       setErrorPassword({ error: true, errorMessage: "Password is required" });
       invalidCount = invalidCount + 1;
     }
 
     if (!/^.{8,}$/.test(formData.password)) {
-      setInvalid(true);
+      console.log("formData.password", formData.password);
+      console.log("PASSWORD", !/^.{8,}$/.test(formData.password));
       setErrorPassword({
         error: true,
-        errorMessage: "Password should contain minimun 8 characters",
+        errorMessage: "Password should contain minimum 8 characters",
       });
       invalidCount = invalidCount + 1;
     }
 
     if (!/^(?=.*[a-z])(?=.*[A-Z])/.test(formData.password)) {
-      setInvalid(true);
       setErrorPassword({
         error: true,
         errorMessage:
@@ -121,13 +118,11 @@ const Register = () => {
     }
 
     if (formData.noTelp === null || formData.noTelp === "") {
-      setInvalid(true);
       setErrorNoTelp({ error: true, errorMessage: "No. Telp is required" });
       invalidCount = invalidCount + 1;
     }
 
     if (!/^\d{1,15}$/.test(formData.noTelp)) {
-      setInvalid(true);
       setErrorNoTelp({
         error: true,
         errorMessage: "No. Telp should be a number and max 15 digits",

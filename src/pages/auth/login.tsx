@@ -4,20 +4,95 @@ import HeroImg from "../../../public/hero-img-1.png";
 import { Button, Form, Image, Logo } from "@/components/atoms";
 import { FormInput } from "@/components/molecules";
 import { useRouter } from "next/router";
-
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { getAuthThunk, loginThunk } from "@/redux/thunk/authThunk";
+import { RootState } from "@/redux/store";
 const Login = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const router = useRouter();
+  const auth = useAppSelector((state: RootState) => state.auth);
+  console.log("STATE AUTH", auth);
+  const dispatch = useAppDispatch();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorEmail, setErrorEmail] = useState({
+    error: false,
+    errorMessage: "",
+  });
+  const [errorPassword, setErrorPassword] = useState({
+    error: false,
+    errorMessage: "",
+  });
+  const handleInputChange = (id: string, value: string) => {
+    setFormData({
+      ...formData,
+      [id]: value,
+    });
+  };
+
+  const validation = () => {
+    setErrorEmail({ error: false, errorMessage: "" });
+    setErrorPassword({ error: false, errorMessage: "" });
+    let invalidCount = 0;
+
+    if (formData.email === null || formData.email === "") {
+      setErrorEmail({ error: true, errorMessage: "Email is required" });
+      invalidCount = invalidCount + 1;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setErrorEmail({ error: true, errorMessage: "Invalid email format" });
+      invalidCount = invalidCount + 1;
+    }
+
+    if (formData.password === null || formData.password === "") {
+      setErrorPassword({ error: true, errorMessage: "Password is required" });
+      invalidCount = invalidCount + 1;
+    }
+
+    if (invalidCount === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const backLandingPage = () => {
     router.push("/");
   };
-  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    // Replace this with your actual login logic
-    login("admin");
+  const handleLogin = async () => {
+    const invalid = validation();
+
+    if (!invalid) {
+      const loggedIn = await dispatch(loginThunk(formData));
+      console.log("LOGIN", loggedIn);
+      const payload = loggedIn.payload;
+      console.log("PAYLOAD", payload);
+      if (payload.success) {
+        const data = payload.data;
+        const token = data.token;
+        localStorage.setItem("access_token", token);
+        await dispatch(getAuthThunk(token))
+          .then((data) => {
+            console.log("RESPONSE DATA GET AUTH", data);
+            const payload = data.payload;
+            if (payload.success) {
+              const returnData = payload.data;
+              console.log("RETURN DATA", returnData);
+              const roleName = returnData.roleName.toLowerCase();
+              const nama = returnData.nama;
+              login(roleName, token, nama);
+            }
+          })
+          .catch((error) => {
+            console.log("ERROR", error);
+          });
+      } else {
+        alert(payload.error);
+      }
+    }
   };
 
   return (
@@ -35,23 +110,25 @@ const Login = () => {
               <FormInput
                 label="Email"
                 id="email"
-                placeholder="Masukkan Email"
+                placeholder="Masukkan email anda"
                 type="email"
                 autoComplete="email"
                 required={true}
-                value={email}
-                // onChange={(e) => setEmail(e.target.value)}
+                onChange={(value) => handleInputChange("email", value)}
+                value={formData.email}
+                error={errorEmail.error}
+                errorMessage={errorEmail.errorMessage}
               />
-
               <FormInput
                 label="Password"
                 id="password"
-                placeholder="Masukkan Password"
+                placeholder="Masukkan password"
                 type="password"
-                autoComplete="current-password"
                 required={true}
-                value={password}
-                // onChange={(e) => setPassword(e.target.value)}
+                onChange={(value) => handleInputChange("password", value)}
+                value={formData.password}
+                error={errorPassword.error}
+                errorMessage={errorPassword.errorMessage}
               />
 
               <div>

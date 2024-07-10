@@ -3,5 +3,5 @@ import { Footer } from "./Footer";
 import { Hero } from "./Hero";
 import { Navbar } from "./Navbar";
 import { VerticalFeatures } from "./VerticalFeature";
-
-export { Banner, Footer, Hero, Navbar, VerticalFeatures };
+import { Table } from "./Table";
+export { Banner, Footer, Hero, Navbar, VerticalFeatures, Table };
