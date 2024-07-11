@@ -23,13 +23,14 @@ const NavItems: React.FC<NavItemProps> = ({ href, icon, label, onClick }) => {
     }
   }, []);
   return (
-    <div
-      className={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white ${active ? "bg-blue-600 text-white" : ""}`}
+    <a
+      href={href}
+      className={`flex justify-start items-start p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white ${active ? "bg-blue-600 text-white" : ""}`}
     >
-      <Button href={href} icon={icon} onClick={onClick}>
-        <Label>{label}</Label>
+      <Button icon={icon} onClick={onClick} justify="start">
+        <Label color={colors.light}>{label}</Label>
       </Button>
-    </div>
+    </a>
   );
 };
 

@@ -4,6 +4,7 @@ import NavItems from "./NavItems";
 import UserProfileCard from "./UserProfileCard";
 import LogoutButton from "./LogoutButton";
 import { Header } from "./Header";
+import AddNewButton from "./AddNewButton";
 
 export {
   CenteredFooter,
@@ -12,4 +13,5 @@ export {
   UserProfileCard,
   LogoutButton,
   Header,
+  AddNewButton,
 };

@@ -1,6 +1,7 @@
 import React from "react";
-import { Divider } from "../atoms";
+import { Button, Divider, Label } from "../atoms";
 import NavItems from "./NavItems";
+import colors from "@/styles/colors";
 
 interface LogoutButtonProps {
   href?: string;
@@ -19,7 +20,9 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({
     <div>
       <Divider />
       <div className="text-white rounded-lg flex items-start justify-around border-0">
-        <NavItems href={href} icon={icon} label={label} onClick={onClick} />
+        <Button onClick={onClick} href={href} icon={icon} justify="start">
+          <Label color={colors.light}>{label}</Label>
+        </Button>
       </div>
     </div>
   );

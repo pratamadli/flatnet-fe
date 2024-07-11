@@ -6,7 +6,13 @@ interface ButtonProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  width?: "quarter" | "half" | "three-quarters" | "full";
+  width?:
+    | "sixteenth"
+    | "eighth"
+    | "quarter"
+    | "half"
+    | "three-quarters"
+    | "full";
   href?: string;
   type?: "button" | "submit" | "reset";
   ariaLabel?: string; // Optional icon size
@@ -73,6 +79,12 @@ const Button = ({
   }
 
   switch (width) {
+    case "sixteenth":
+      widthClass = "w-1/16";
+      break;
+    case "eighth":
+      widthClass = "w-1/8";
+      break;
     case "quarter":
       widthClass = "w-1/4";
       break;
