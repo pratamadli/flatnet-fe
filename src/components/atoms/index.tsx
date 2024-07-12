@@ -25,6 +25,7 @@ import { Spinner } from "./Spinner";
 import { Text } from "./Text";
 import { VerticalFeatureRow } from "./VerticalFeatureRow";
 import { Form } from "./Form";
+import Select from "./Select";
 
 export {
   Background,
@@ -43,4 +44,5 @@ export {
   Text,
   VerticalFeatureRow,
   Form,
+  Select,
 };

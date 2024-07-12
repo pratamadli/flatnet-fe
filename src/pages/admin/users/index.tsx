@@ -6,28 +6,21 @@ import { getUsersThunk } from "@/redux/thunk/usersThunk";
 import { useAuth } from "@/utils/AuthContext";
 import { Table } from "@/components/organisms";
 import { Label } from "@/components/atoms";
+import { useRouter } from "next/router";
 
 const UsersList = () => {
+  const route = useRouter();
   const [usersList, setUsersList] = useState([]);
   const dispatch = useAppDispatch();
   const users = useAppSelector((state: RootState) => state.users);
   const { user, logout } = useAuth();
-
+  const handleAddNewButton = () => {
+    route.push("/admin/users/form");
+  };
   const columns = [
-    { header: "Email", accessor: "email" },
-    { header: "Nama", accessor: "nama" },
-    {
-      header: "Role",
-      accessor: "roleId",
-      render: (roleId: any) =>
-        roleId === 1 ? (
-          <Label>Admin</Label>
-        ) : roleId === 2 ? (
-          <Label>Petugas</Label>
-        ) : (
-          <Label>Pelanggan</Label>
-        ),
-    },
+    { header: "Email", accessor: "email", searchable: true },
+    { header: "Nama", accessor: "nama", searchable: true },
+    { header: "Role", accessor: "roleName", searchable: true },
     {
       header: "Actions",
       accessor: "actions",
@@ -79,7 +72,12 @@ const UsersList = () => {
 
   return (
     <div>
-      <Table columns={columns} addNewButton={true} data={usersList} />
+      <Table
+        columns={columns}
+        addNewButton={true}
+        data={usersList}
+        onClickAdd={handleAddNewButton}
+      />
     </div>
   );
 };

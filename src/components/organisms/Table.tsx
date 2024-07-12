@@ -5,6 +5,7 @@ interface Column {
   header: string;
   accessor: string;
   render?: (data: any) => React.ReactNode;
+  searchable?: boolean;
 }
 
 interface TableProps {
@@ -38,10 +39,12 @@ const Table: React.FC<TableProps> = ({
 
   const filteredData = data.filter((item) => {
     return columns.some((column) => {
-      return item[column.accessor]
-        .toString()
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+      if (!column.searchable) return false; // Only search within searchable columns
+      const cellValue = item[column.accessor];
+      return (
+        cellValue !== undefined &&
+        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      );
     });
   });
 
