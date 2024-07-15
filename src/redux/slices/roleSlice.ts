@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ReturnState, CurrentUserDataPayload } from "../types";
+import { ReturnState } from "../types";
 
 const initialState: ReturnState = {
   success: false,
@@ -10,14 +10,13 @@ const initialState: ReturnState = {
   description: null,
   loading: false,
   error: null,
-  currentData: null,
 };
 
-const usersSlice = createSlice({
-  name: "users",
+const roleSlice = createSlice({
+  name: "role",
   initialState,
   reducers: {
-    setUsersData(state, action: PayloadAction<ReturnState>) {
+    setRoleData(state, action: PayloadAction<ReturnState>) {
       state.success = action.payload.success;
       state.data = action.payload.data;
       state.message = action.payload.message;
@@ -25,16 +24,13 @@ const usersSlice = createSlice({
       state.date_end = action.payload.date_end;
       state.description = action.payload.description;
     },
-    setUserCurrentData(state, action: PayloadAction<CurrentUserDataPayload>) {
-      state.currentData = action.payload;
-    },
-    setUsersLoading(state, action: PayloadAction<boolean>) {
+    setRoleLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    setUsersError(state, action) {
+    setRoleError(state, action) {
       state.error = action.payload;
     },
-    clearUsersState(state) {
+    clearRoleState(state) {
       state.success = false;
       state.data = null;
       state.message = null;
@@ -43,20 +39,10 @@ const usersSlice = createSlice({
       state.description = null;
       state.loading = false;
       state.error = null;
-      state.currentData = null;
-    },
-    clearUserCurrentData(state) {
-      state.currentData = null;
     },
   },
 });
 
-export const {
-  clearUsersState,
-  setUsersData,
-  setUsersError,
-  setUsersLoading,
-  setUserCurrentData,
-  clearUserCurrentData,
-} = usersSlice.actions;
-export default usersSlice.reducer;
+export const { clearRoleState, setRoleData, setRoleError, setRoleLoading } =
+  roleSlice.actions;
+export default roleSlice.reducer;

@@ -10,6 +10,7 @@ interface InputProps {
   value?: string;
   onChange?: (value: string) => void;
   className?: string;
+  maxCharacters?: number | null;
 }
 
 const Input = ({
@@ -21,8 +22,12 @@ const Input = ({
   required = false,
   value = "",
   onChange = () => {},
+  maxCharacters,
 }: InputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (maxCharacters && e.target.value.length > maxCharacters) {
+      return; // Prevent input if it exceeds maxCharacters
+    }
     if (onChange) {
       onChange(e.target.value);
     }

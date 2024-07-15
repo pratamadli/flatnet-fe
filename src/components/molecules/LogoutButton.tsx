@@ -20,7 +20,13 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({
     <div>
       <Divider />
       <div className="text-white rounded-lg flex items-start justify-around border-0">
-        <Button onClick={onClick} href={href} icon={icon} justify="start">
+        <Button
+          onClick={onClick}
+          href={href}
+          icon={icon}
+          justify="start"
+          variant="sidebar"
+        >
           <Label color={colors.light}>{label}</Label>
         </Button>
       </div>

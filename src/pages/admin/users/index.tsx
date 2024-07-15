@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import { BaseMenu } from "../../../components/layouts";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/rootReducer";
-import { getUsersThunk } from "@/redux/thunk/usersThunk";
+import { getUsersThunk, setCurrentUserThunk } from "@/redux/thunk/usersThunk";
 import { useAuth } from "@/utils/AuthContext";
 import { Table } from "@/components/organisms";
-import { Label } from "@/components/atoms";
+import { Button, Label } from "@/components/atoms";
 import { useRouter } from "next/router";
+import colors from "@/styles/colors";
+import { clearUserCurrentData } from "@/redux/slices";
 
 const UsersList = () => {
   const route = useRouter();
   const [usersList, setUsersList] = useState([]);
   const dispatch = useAppDispatch();
-  const users = useAppSelector((state: RootState) => state.users);
   const { user, logout } = useAuth();
   const handleAddNewButton = () => {
     route.push("/admin/users/form");
@@ -22,26 +23,20 @@ const UsersList = () => {
     { header: "Nama", accessor: "nama", searchable: true },
     { header: "Role", accessor: "roleName", searchable: true },
     {
-      header: "Actions",
+      header: "",
       accessor: "actions",
-      render: (user: any) => (
-        <>
-          <a
-            href={`/admin/users/form`}
-            className="text-blue-600 hover:underline"
-          >
-            Edit
-          </a>{" "}
-          |
-          <a
-            href={`/admin/users/delete`}
-            className="text-red-600 hover:underline"
-          >
-            {" "}
-            Delete
-          </a>
-        </>
-      ),
+      render: (e: any) => {
+        return (
+          <div className="flex row-auto justify-end">
+            <Button width="quarter" onClick={() => handleEditData(e)}>
+              <Label color={colors.darkBlue}>Edit</Label>
+            </Button>
+            <Button width="quarter">
+              <Label color={colors.secondary}>Hapus</Label>
+            </Button>
+          </div>
+        );
+      },
     },
   ];
 
@@ -66,8 +61,21 @@ const UsersList = () => {
       });
   };
 
+  const handleEditData = async (editData?: any) => {
+    console.log("Event handle edit data", editData);
+
+    await dispatch(setCurrentUserThunk(editData)).then(() => {
+      route.push("/admin/users/form");
+    });
+  };
+
+  const clearCurrentData = async () => {
+    await dispatch(clearUserCurrentData());
+  };
+
   useEffect(() => {
     getUsers();
+    clearCurrentData();
   }, []);
 
   return (

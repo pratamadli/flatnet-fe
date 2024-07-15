@@ -4,10 +4,11 @@
 import React, { useState } from "react";
 import HeroImg from "../../../public/hero-img-1.png";
 import { useRouter } from "next/router";
-import { Button, Form, Image, Logo } from "@/components/atoms";
+import { Button, Form, Image, Label, Logo } from "@/components/atoms";
 import { FormInput } from "@/components/molecules";
 import { registerThunk } from "@/redux/thunk/authThunk";
 import { useAppDispatch } from "@/redux/hooks";
+import colors from "@/styles/colors";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -277,10 +278,9 @@ const Register = () => {
               Sudah punya akun? &nbsp;
               <Button
                 href="/auth/login"
-                variant="light"
                 className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
               >
-                Login
+                <Label color={colors.darkBlue}>Login</Label>
               </Button>
             </p>
           </div>

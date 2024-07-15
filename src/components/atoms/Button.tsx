@@ -36,8 +36,13 @@ interface ButtonProps {
     | "light"
     | "midgray"
     | "darkgray"
-    | "black";
+    | "black"
+    | "darkBlue"
+    | "white"
+    | "sidebar"
+    | null;
   textColor?: string;
+  active?: boolean;
 }
 
 const Button = ({
@@ -52,12 +57,13 @@ const Button = ({
   icon = "",
   justify = "center",
   items = "center",
-  variant = "primary",
+  variant = null,
   textColor,
+  active = false,
 }: ButtonProps) => {
   let buttonSizeClass = "px-3 py-1.5 text-sm leading-6";
   let widthClass = "w-full";
-  let variantClass = `bg-${colors[variant]} ${textColor ? `text-${textColor}` : variant === "light" ? "text-black" : `text-${colors.light}`} hover:bg-${colors[variant]}-dark focus:bg-${colors[variant]}-dark`;
+  let variantClass = `${textColor ? `text-${textColor}` : variant === "light" ? "text-black" : `text-${colors.light}`} hover:bg-${variant ? (variant === "sidebar" ? colors.lightgray : colors[variant]) : colors.midgray}-dark focus:bg-${variant ? (variant === "sidebar" ? colors.lightgray : colors[variant]) : colors.midgray}-dark`;
   switch (size) {
     case "xs":
       buttonSizeClass = "px-2 py-1 text-xs leading-4";
@@ -107,7 +113,20 @@ const Button = ({
 
   if (href) {
     return (
-      <button onClick={onClick}>
+      <button
+        onClick={onClick}
+        style={{
+          backgroundColor: active
+            ? colors.primary
+            : variant
+              ? variant === "sidebar"
+                ? "transparent"
+                : colors[variant]
+              : "transparent",
+          borderWidth: "none",
+          borderColor: variant === "sidebar" ? "" : colors.lightgray,
+        }}
+      >
         <a href={href} {...commonProps}>
           {icon && (
             <span className="mr-2">
@@ -121,7 +140,22 @@ const Button = ({
   }
 
   return (
-    <button type={type} onClick={onClick} {...commonProps}>
+    <button
+      type={type}
+      onClick={onClick}
+      {...commonProps}
+      style={{
+        backgroundColor: active
+          ? colors.primary
+          : variant
+            ? variant === "sidebar"
+              ? "transparent"
+              : colors[variant]
+            : "transparent",
+        borderWidth: "node",
+        borderColor: variant === "sidebar" ? "" : colors.lightgray,
+      }}
+    >
       {icon && (
         <span className="mr-2">
           <Icon name={icon} />

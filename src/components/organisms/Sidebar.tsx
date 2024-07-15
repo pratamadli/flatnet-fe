@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
           {" "}
           <Logo fontStyle="font-semibold text-3xl" height={88} width={88} />
         </div>
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {menuItems.map((item) => (
             <li key={item.href}>
               <NavItems href={item.href} icon={item.icon} label={item.label} />

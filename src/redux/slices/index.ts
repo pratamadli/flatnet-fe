@@ -10,7 +10,16 @@ import {
   setUsersData,
   setUsersError,
   setUsersLoading,
+  setUserCurrentData,
+  clearUserCurrentData,
 } from "./usersSlice";
+
+import {
+  clearRoleState,
+  setRoleData,
+  setRoleError,
+  setRoleLoading,
+} from "./roleSlice";
 
 export {
   clearAuthState,
@@ -21,4 +30,10 @@ export {
   setUsersData,
   setUsersError,
   setUsersLoading,
+  setUserCurrentData,
+  clearUserCurrentData,
+  clearRoleState,
+  setRoleData,
+  setRoleError,
+  setRoleLoading,
 };

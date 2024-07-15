@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useAuth } from "@/utils/AuthContext";
 import HeroImg from "../../../public/hero-img-1.png";
-import { Button, Form, Image, Logo } from "@/components/atoms";
+import { Button, Form, Image, Label, Logo } from "@/components/atoms";
 import { FormInput } from "@/components/molecules";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { getAuthThunk, loginThunk } from "@/redux/thunk/authThunk";
 import { RootState } from "@/redux/store";
+import colors from "@/styles/colors";
 const Login = () => {
   const { login } = useAuth();
   const router = useRouter();
@@ -135,6 +136,7 @@ const Login = () => {
                 <Button
                   onClick={handleLogin}
                   className="bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  variant="primary"
                 >
                   Sign In
                 </Button>
@@ -178,10 +180,9 @@ const Login = () => {
               </a> */}
               <Button
                 href="/auth/register"
-                variant="light"
                 className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
               >
-                Daftar Akun
+                <Label color={colors.darkBlue}>Daftar Akun</Label>
               </Button>
             </p>
           </div>

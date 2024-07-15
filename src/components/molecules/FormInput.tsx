@@ -12,6 +12,7 @@ interface Props {
   onChange?: (value: string) => void;
   error?: boolean;
   errorMessage?: string;
+  maxCharacters?: number | null;
 }
 
 const FormInput: React.FC<Props> = ({
@@ -25,6 +26,7 @@ const FormInput: React.FC<Props> = ({
   onChange = () => {},
   error = false,
   errorMessage = "",
+  maxCharacters,
 }) => {
   return (
     <div>
@@ -38,6 +40,7 @@ const FormInput: React.FC<Props> = ({
       </div>
       <div className="mt-2">
         <Input
+          maxCharacters={maxCharacters}
           value={value}
           onChange={onChange}
           placeholder={placeholder}

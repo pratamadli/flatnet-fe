@@ -25,7 +25,6 @@ const Table: React.FC<TableProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filters, setFilters] = useState({}); // Add any initial filters here
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -99,9 +98,7 @@ const Table: React.FC<TableProps> = ({
             <tr key={rowIndex} className="border-b">
               {columns.map((column) => (
                 <td key={column.accessor} className="py-2 px-6">
-                  {column.render
-                    ? column.render(item[column.accessor])
-                    : item[column.accessor]}
+                  {column.render ? column.render(item) : item[column.accessor]}
                 </td>
               ))}
             </tr>

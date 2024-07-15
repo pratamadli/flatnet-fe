@@ -1,5 +1,5 @@
-// src/Select.tsx
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
+import { Label } from "./Label";
 
 interface SelectOption {
   value: string;
@@ -9,80 +9,63 @@ interface SelectOption {
 interface SelectProps {
   options: SelectOption[];
   placeholder?: string;
-  onChange: (selectedOption: SelectOption | null) => void;
+  onChange: (value: SelectOption | null) => void;
+  error?: boolean;
+  errorMessage?: string;
+  label?: string;
+  value?: string;
 }
 
-const Select: React.FC<SelectProps> = ({ options, placeholder, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<SelectOption | null>(
-    null
-  );
-  const selectRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleSelect = (option: SelectOption) => {
-    setSelectedOption(option);
-    onChange(option);
-    setIsOpen(false);
+const Select: React.FC<SelectProps> = ({
+  options,
+  placeholder,
+  onChange,
+  error = false,
+  errorMessage = "",
+  label = "Select Options",
+  value,
+}) => {
+  console.log("OPTIONS TO SELECT", options);
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log("EVENT HANDLE CHANGE SELECT.TSX", event.target.value);
+    const selectedValue = event.target.value;
+    console.log("SELECTED VALUE", selectedValue);
+    const selectedOption =
+      options.find((option) => option.value.toString() === selectedValue) ||
+      null;
+    onChange(selectedOption);
   };
 
   return (
-    <div className="relative inline-block text-left w-full" ref={selectRef}>
-      <div>
-        <button
-          type="button"
-          className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {selectedOption
-            ? selectedOption.label
-            : placeholder || "Select an option"}
-          <svg
-            className="-mr-1 ml-2 h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
+    <div>
+      <div className="flex items-center justify-between">
+        <Label className="block text-sm font-medium leading-6 text-gray-900">
+          {label}
+        </Label>
       </div>
-
-      {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          <div className="py-1">
-            {options.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => handleSelect(option)}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      <div
+        className={`relative inline-block text-left w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-500 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 px-2 ${
+          error
+            ? "ring-red-500 focus:ring-red-500"
+            : "ring-gray-300 focus:ring-indigo-600"
+        }`}
+      >
+        <select
+          onChange={(e) => handleChange(e)}
+          value={value}
+          className="w-full"
+        >
+          <option value="" disabled>
+            {placeholder}
+          </option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              <Label>{option.label}</Label>
+            </option>
+          ))}
+        </select>
+      </div>
+      {error && <p className="mt-1 text-sm text-red-600">{errorMessage}</p>}
     </div>
   );
 };

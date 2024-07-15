@@ -12,6 +12,32 @@ export interface RegisterPayload {
   alamat: string;
 }
 
+export interface CreateUserPayload {
+  email: string;
+  password: string;
+  nik: string;
+  nama: string;
+  noTelp: string;
+  alamat: string;
+  roleId: string;
+}
+
+export interface CurrentUserDataPayload {
+  alamat: string;
+  createdAt: string | null;
+  createdUserId: string | number | null;
+  email: string;
+  nama: string;
+  nik: string;
+  noTelp: string;
+  password: string;
+  roleId: string | number;
+  roleName: string;
+  updatedAt: string;
+  updatedUserId: string | null;
+  userId: string | number | null;
+}
+
 export interface LogoutPayload {}
 
 export interface ReturnState {
@@ -23,4 +49,5 @@ export interface ReturnState {
   description?: string | null;
   loading: boolean;
   error?: any | null;
+  currentData?: any | null;
 }

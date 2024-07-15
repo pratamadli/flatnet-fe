@@ -1,34 +1,58 @@
 import { Select } from "@/components/atoms";
 import { BaseMenu } from "@/components/layouts";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { UserForm as FormUser } from "@/components/organisms";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAuth } from "@/utils/AuthContext";
+import { getRoleThunk } from "@/redux/thunk/roleThunk";
+import { RootState } from "@/redux/rootReducer";
 
-interface SelectOption {
+interface SelectOptionRole {
   value: string;
   label: string;
 }
 
 const UserForm = () => {
-  const options: SelectOption[] = [
-    { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
-  ];
-
-  const [selectedOption, setSelectedOption] = useState<SelectOption | null>(
-    null
+  const route = useRouter();
+  const userCurrentData = useAppSelector(
+    (state: RootState) => state.users.currentData
   );
-
-  const handleSelectChange = (option: SelectOption | null) => {
-    setSelectedOption(option);
-    console.log("Selected option:", option);
+  console.log("USER CURRENT DATA", userCurrentData);
+  const { logout, user } = useAuth();
+  const dispatch = useAppDispatch();
+  const [roleOptions, setRoleOptions] = useState<SelectOptionRole[]>([]);
+  const getRoles = async () => {
+    const token = user?.token || "";
+    await dispatch(getRoleThunk(token))
+      .then((data) => {
+        if (data.payload.success) {
+          const roleList = data.payload.data;
+          const roles: SelectOptionRole[] = roleList.map((role: any) => ({
+            value: role.roleId,
+            label: role.roleName,
+          }));
+          setRoleOptions(roles);
+        } else {
+          if (data.payload.message === "jwt expired") {
+            alert("SESSION EXPIRED");
+            logout();
+          } else {
+            console.log("ERROR GET ROLES", data.payload);
+          }
+        }
+      })
+      .catch((error) => {
+        console.log("ERROR PAYLOAD", error);
+      });
   };
+
+  useEffect(() => {
+    getRoles();
+  }, []);
   return (
     <div>
-      <Select
-        options={options}
-        onChange={handleSelectChange}
-        placeholder="Choose an option"
-      />{" "}
+      <FormUser options={roleOptions} currentData={userCurrentData} />
     </div>
   );
 };
