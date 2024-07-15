@@ -291,7 +291,7 @@ const UserForm: React.FC<UserFormProps> = ({ options, currentData }) => {
                   const valueString = value?.value || null;
                   handleInputChange("roleId", valueString);
                 }}
-                value={formData.roleId}
+                value={formData.roleId.toString()}
                 options={options}
                 error={errorRoleId.error}
                 errorMessage={errorRoleId.errorMessage}

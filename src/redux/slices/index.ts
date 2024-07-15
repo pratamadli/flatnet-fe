@@ -21,6 +21,12 @@ import {
   setRoleLoading,
 } from "./roleSlice";
 
+import {
+  clearDashboardState,
+  setDashboardData,
+  setDashboardError,
+  setDashboardLoading,
+} from "./dashboardSlice";
 export {
   clearAuthState,
   setAuthData,
@@ -36,4 +42,8 @@ export {
   setRoleData,
   setRoleError,
   setRoleLoading,
+  clearDashboardState,
+  setDashboardData,
+  setDashboardError,
+  setDashboardLoading,
 };

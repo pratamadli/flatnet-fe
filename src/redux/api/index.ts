@@ -1,6 +1,12 @@
 import { getAuthApi, loginApi, logoutApi, registerApi } from "./auth";
-import { getUsersApi, createUserApi } from "./users";
+import {
+  getUsersApi,
+  createUserApi,
+  deleteUserApi,
+  updateUserApi,
+} from "./users";
 import { getRolesApi } from "./role";
+import { getDashboardApi } from "./dashboard";
 export {
   getAuthApi,
   loginApi,
@@ -9,4 +15,7 @@ export {
   getUsersApi,
   createUserApi,
   getRolesApi,
+  getDashboardApi,
+  deleteUserApi,
+  updateUserApi,
 };
