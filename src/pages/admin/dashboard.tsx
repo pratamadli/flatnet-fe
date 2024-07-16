@@ -4,9 +4,27 @@ import { BaseMenu } from "../../components/layouts";
 import { useAppDispatch } from "@/redux/hooks";
 import { getDashboardThunk } from "@/redux/thunk/dashboardThunk";
 import { useAuth } from "@/utils/AuthContext";
+import { AdminValueInformation } from "@/components/organisms/AdminValueInformaton";
 
 const Dashboard = () => {
-  const [dataDashboard, setDataDashboard] = useState(null);
+  const [dataDashboard, setDataDashboard] = useState({
+    userId: 0,
+    roleId: 0,
+    email: "",
+    nama: "",
+    noTelp: "",
+    nik: "",
+    alamat: "",
+    createdUserId: null,
+    updatedUserId: null,
+    createdAt: "",
+    updatedAt: "",
+    roleName: "",
+    totalPetugas: 0,
+    totalLayanan: 0,
+    totalPelanggan: 0,
+    totalUser: 0,
+  });
   const dispatch = useAppDispatch();
   const { user, logout } = useAuth();
   const getDashboard = async () => {
@@ -34,8 +52,11 @@ const Dashboard = () => {
   }, []);
   return (
     <div>
-      {/* <h1>Welcome back, Admin</h1> */}
-      {/* Add the rest of your dashboard content here */}
+      <AdminValueInformation
+        totalLayanan={dataDashboard?.totalLayanan || 0}
+        totalPelanggan={dataDashboard.totalPelanggan || 0}
+        totalUsers={dataDashboard.totalUser || 0}
+      />
     </div>
   );
 };

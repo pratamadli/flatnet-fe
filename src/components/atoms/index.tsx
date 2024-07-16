@@ -26,6 +26,11 @@ import { Text } from "./Text";
 import { VerticalFeatureRow } from "./VerticalFeatureRow";
 import { Form } from "./Form";
 import Select from "./Select";
+import { Card } from "./Card";
+import { CardBody } from "./CardBody";
+import { CardFooter } from "./CardFooter";
+import { CardHeader } from "./CardHeader";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "./Modal";
 
 export {
   Background,
@@ -45,4 +50,12 @@ export {
   VerticalFeatureRow,
   Form,
   Select,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
 };

@@ -5,6 +5,7 @@ import UserProfileCard from "./UserProfileCard";
 import LogoutButton from "./LogoutButton";
 import { Header } from "./Header";
 import AddNewButton from "./AddNewButton";
+import { ValueCard } from "./ValueCard";
 
 export {
   CenteredFooter,
@@ -14,4 +15,5 @@ export {
   LogoutButton,
   Header,
   AddNewButton,
+  ValueCard,
 };

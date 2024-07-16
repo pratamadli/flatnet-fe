@@ -9,10 +9,13 @@ import { Button, Label } from "@/components/atoms";
 import { useRouter } from "next/router";
 import colors from "@/styles/colors";
 import { clearUserCurrentData } from "@/redux/slices";
+import { UserDeleteModal } from "@/components/organisms/UserDeleteModal";
 
 const UsersList = () => {
   const route = useRouter();
   const [usersList, setUsersList] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
   const dispatch = useAppDispatch();
   const { user, logout } = useAuth();
   const handleAddNewButton = () => {
@@ -31,14 +34,28 @@ const UsersList = () => {
             <Button width="quarter" onClick={() => handleEditData(e)}>
               <Label color={colors.darkBlue}>Edit</Label>
             </Button>
-            <Button width="quarter">
-              <Label color={colors.secondary}>Hapus</Label>
+            <Button width="quarter" onClick={() => handleDeleteData(e)}>
+              <Label color={colors.darkgray}>Hapus</Label>
             </Button>
           </div>
         );
       },
     },
   ];
+
+  const handleDeleteData = (e: any) => {
+    console.log("E DATA", e);
+    setDeleteId(e.userId.toString());
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleOnDelete = () => {
+    console.log("Delete User ID", deleteId);
+  };
 
   const getUsers = async () => {
     const token = user?.token || "";
@@ -85,6 +102,11 @@ const UsersList = () => {
         addNewButton={true}
         data={usersList}
         onClickAdd={handleAddNewButton}
+      />
+      <UserDeleteModal
+        isOpen={modalVisible}
+        onClose={handleCloseModal}
+        onDelete={handleOnDelete}
       />
     </div>
   );

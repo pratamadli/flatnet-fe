@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AddNewButton, FormInput } from "../molecules";
-import { Input } from "../atoms";
+import { Input, Label } from "../atoms";
 interface Column {
   header: string;
   accessor: string;
@@ -93,17 +93,25 @@ const Table: React.FC<TableProps> = ({
             ))}
           </tr>
         </thead>
-        <tbody>
-          {currentData.map((item, rowIndex) => (
-            <tr key={rowIndex} className="border-b">
-              {columns.map((column) => (
-                <td key={column.accessor} className="py-2 px-6">
-                  {column.render ? column.render(item) : item[column.accessor]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        {currentData.length > 0 ? (
+          <tbody>
+            {currentData.map((item, rowIndex) => (
+              <tr key={rowIndex} className="border-b">
+                {columns.map((column) => (
+                  <td key={column.accessor} className="py-2 px-6">
+                    {column.render
+                      ? column.render(item)
+                      : item[column.accessor]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <tbody className="justify-center">
+            <Label>Data Not Found</Label>
+          </tbody>
+        )}
       </table>
       <div className="flex justify-between items-center mt-4">
         <button
