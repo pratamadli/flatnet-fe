@@ -5,7 +5,7 @@ const colors = {
   success: "#039855",
   warning: "#F7BB55",
   light: "#F2F4F7",
-  midgray: "#C8CDD0",
+  midgray: "#667085",
   darkgray: "#48505E",
   black: "#1F292E",
   darkBlue: "#012970",

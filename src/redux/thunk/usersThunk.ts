@@ -5,12 +5,14 @@ import {
   setUsersError,
   setUsersLoading,
   setUserCurrentData,
+  setPetugasData,
 } from "../slices";
 import {
   getUsersApi,
   createUserApi,
   updateUserApi,
   deleteUserApi,
+  getPetugasAllApi,
 } from "../api";
 import { CreateUserPayload, CurrentUserDataPayload } from "../types";
 
@@ -166,6 +168,30 @@ export const clearCurrentUserThunk = createAsyncThunk(
       }
     } finally {
       thunkAPI.dispatch(setUsersLoading(false));
+    }
+  }
+);
+
+export const getPetugasThunk = createAsyncThunk(
+  "petugasAll/get",
+  async (token: string, thunksAPI) => {
+    thunksAPI.dispatch(setUsersLoading(true));
+    try {
+      const response = await getPetugasAllApi(token);
+      thunksAPI.dispatch(setPetugasData(response.data));
+      return response.data;
+    } catch (error) {
+      console.log("ERROR", error);
+      if (isAxiosError(error)) {
+        thunksAPI.dispatch(setUsersError(error.response.data)); // Dispatch setUsersError action
+        return thunksAPI.rejectWithValue(error.response.data);
+      } else {
+        const unexpectedError = { message: "An unexpected error occurred" };
+        thunksAPI.dispatch(setUsersError(unexpectedError)); // Dispatch setUsersError action
+        return thunksAPI.rejectWithValue(unexpectedError);
+      }
+    } finally {
+      thunksAPI.dispatch(setUsersLoading(false));
     }
   }
 );

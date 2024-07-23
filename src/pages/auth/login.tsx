@@ -84,7 +84,8 @@ const Login = () => {
               console.log("RETURN DATA", returnData);
               const roleName = returnData.roleName.toLowerCase();
               const nama = returnData.nama;
-              login(roleName, token, nama);
+              const email = returnData.email;
+              login(roleName, token, nama, email);
             }
           })
           .catch((error) => {

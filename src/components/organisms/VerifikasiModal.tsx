@@ -7,17 +7,23 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  Select,
 } from "../atoms";
 import colors from "@/styles/colors";
 import { FormInput } from "../molecules";
 import { useAppDispatch } from "@/redux/hooks";
 import {
   getLayananFilterThunk,
-  tolakLayananThunk,
+  verifikasiLayananThunk,
 } from "@/redux/thunk/layananThunk";
-
+import { getPetugasThunk } from "@/redux/thunk/usersThunk";
+import { useAuth } from "@/utils/AuthContext";
+interface SelectOption {
+  value: string;
+  label: string;
+}
 interface DataPesananProps {
-  alasanTolak?: string | null;
+  petugasId?: string | null;
   alamatPelanggan?: string | null;
   createdAt: string;
   createdUserId: string | number;
@@ -31,30 +37,31 @@ interface DataPesananProps {
   namaStatus: string;
   paketLayananId: number | string;
   pelangganId: number | string;
-  petugasId: number | string | null;
   status: string | null;
   updatedAt: string | null;
   updatedUserId: string | number;
   waktuPemasangan: string | null;
 }
-interface TolakModalProps {
+interface VerifikasiModalProps {
   isOpen: boolean;
   onClose: () => void;
   data?: DataPesananProps | null | undefined;
 }
 
-const TolakModal: React.FC<TolakModalProps> = ({
+const VerifikasiModal: React.FC<VerifikasiModalProps> = ({
   isOpen,
   onClose,
   data = null,
 }) => {
-  console.log("DATA TOLAK", data);
+  console.log("DATA VERIFIKASI", data);
+  const { user } = useAuth();
   const dispatch = useAppDispatch();
+  const [dataPetugas, setDataPetugas] = useState<SelectOption[]>([]);
   const [formData, setFormData] = useState({
     layananId: "",
-    alasanTolak: "",
+    petugasId: "",
   });
-  const [errorAlasanTolak, setErrorAlasanTolak] = useState({
+  const [errorPetugas, setErrorPetugas] = useState({
     error: false,
     errorMessage: "",
   });
@@ -63,13 +70,13 @@ const TolakModal: React.FC<TolakModalProps> = ({
     setFormData({ ...formData, [id]: value });
   };
   const validation = () => {
-    setErrorAlasanTolak({ error: false, errorMessage: "" });
+    setErrorPetugas({ error: false, errorMessage: "" });
     let invalidCount = 0;
 
-    if (formData.alasanTolak === null || formData.alasanTolak === "") {
-      setErrorAlasanTolak({
+    if (formData.petugasId === null || formData.petugasId === "") {
+      setErrorPetugas({
         error: true,
-        errorMessage: "Alasan Tolak is required",
+        errorMessage: "Petugas is required",
       });
       invalidCount = invalidCount + 1;
     }
@@ -85,24 +92,40 @@ const TolakModal: React.FC<TolakModalProps> = ({
     if (data) {
       setFormData({
         layananId: data?.layananId?.toString() || "",
-        alasanTolak: data?.alasanTolak?.toString() || "",
+        petugasId: data?.petugasId?.toString() || "",
       });
     }
+    const token = user?.token || "";
+    dispatch(getPetugasThunk(token)).then((e) => {
+      const data = e.payload.data || [];
+      let newData = [];
+      for (let i = 0; i < data.length; i++) {
+        let newObj = {
+          label: data[i].nama,
+          value: data[i].petugasId,
+        };
+        newData.push(newObj);
+      }
+      setDataPetugas(newData);
+    });
   }, []);
 
-  const handleTolak = async () => {
+  const handleVerifikasi = async () => {
     const invalid = await validation();
     if (!invalid) {
       setFormData({
         ...formData,
         layananId: data?.layananId?.toString() || "",
       });
-      console.log("JALAN BUTTON TOLAK");
+      console.log("JALAN BUTTON VERIF");
       console.log("FORMDATA", formData);
-      const tolakLayanan = await dispatch(tolakLayananThunk(formData));
-      const payload = tolakLayanan.payload;
+      const verifikasiLayanan = await dispatch(
+        verifikasiLayananThunk(formData)
+      );
+      const payload = verifikasiLayanan.payload;
+
       if (payload.success) {
-        alert("Tolak Layanan Success");
+        alert("Verifikasi Layanan Success");
         onClose();
       } else {
         alert(payload.message);
@@ -112,14 +135,14 @@ const TolakModal: React.FC<TolakModalProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader
-        title="Tolak Pesanan?"
+        title="Verifikasi Pesanan?"
         showCloseButton={true}
         onClose={onClose}
       />
       <ModalBody>
         <div className="my-2">
           <Label className="font-semibold" color={colors.black}>
-            Tolak Pemesanan?
+            Verifikasi Pemesanan?
           </Label>
           <div className="flex my-2 py-2">
             <div className="col-span-12 mr-3">
@@ -168,18 +191,18 @@ const TolakModal: React.FC<TolakModalProps> = ({
             </div>
           </div>
           <div className="my-2 py-2">
-            <FormInput
-              label="Masukkan Alasan Tolak"
-              id="alasanTolak"
-              placeholder="Alasan Tolak"
-              type="text"
-              value={formData.alasanTolak}
-              error={errorAlasanTolak.error}
-              errorMessage={errorAlasanTolak.errorMessage}
-              required={true}
+            <Select
+              placeholder="Pilih Role"
               onChange={(value) => {
-                handleInputChange("alasanTolak", value);
+                console.log("VALUE ON CHANGE", value);
+                const valueString = value?.value || "";
+                handleInputChange("petugasId", valueString || "");
               }}
+              value={formData.petugasId.toString()}
+              options={dataPetugas}
+              error={errorPetugas.error}
+              errorMessage={errorPetugas.errorMessage}
+              label="Pilih Role"
             />
           </div>
         </div>
@@ -189,8 +212,8 @@ const TolakModal: React.FC<TolakModalProps> = ({
           {/* <Button onClick={onClose} variant={"light"}>
             <Label color={colors.black}>Batal</Label>
           </Button> */}
-          <Button onClick={handleTolak} variant={"danger"}>
-            <Label color={colors.light}>Tolak</Label>
+          <Button onClick={handleVerifikasi} variant={"primary"}>
+            <Label color={colors.light}>Verifikasi</Label>
           </Button>
         </div>
       </ModalFooter>
@@ -198,4 +221,4 @@ const TolakModal: React.FC<TolakModalProps> = ({
   );
 };
 
-export { TolakModal };
+export { VerifikasiModal };

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CurrentLayananPayload, ReturnState } from "../types";
+import { CurrentPaketLayananPayload, ReturnState } from "../types";
 
 const initialState: ReturnState = {
   success: false,
@@ -13,11 +13,11 @@ const initialState: ReturnState = {
   currentData: null,
 };
 
-const layananSlice = createSlice({
-  name: "layanan",
+const paketLayananSlice = createSlice({
+  name: "paketLayanan",
   initialState,
   reducers: {
-    setLayananData(state, action: PayloadAction<ReturnState>) {
+    setPaketLayananData(state, action: PayloadAction<ReturnState>) {
       state.success = action.payload.success;
       state.data = action.payload.data;
       state.message = action.payload.message;
@@ -25,13 +25,13 @@ const layananSlice = createSlice({
       state.date_end = action.payload.date_end;
       state.description = action.payload.description;
     },
-    setLayananLoading(state, action: PayloadAction<boolean>) {
+    setPaketLayananLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    setLayananError(state, action) {
+    setPaketLayananError(state, action) {
       state.error = action.payload;
     },
-    clearLayananState(state) {
+    clearPaketLayananState(state) {
       state.success = false;
       state.data = null;
       state.message = null;
@@ -41,24 +41,24 @@ const layananSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    setCurrentLayananState(
+    setCurrentPaketLayananState(
       state,
-      action: PayloadAction<CurrentLayananPayload>
+      action: PayloadAction<CurrentPaketLayananPayload>
     ) {
       state.currentData = action.payload;
     },
-    clearCurrentLayananState(state) {
+    clearCurrentPaketLayananState(state) {
       state.currentData = null;
     },
   },
 });
 
 export const {
-  clearLayananState,
-  setLayananData,
-  setLayananError,
-  setLayananLoading,
-  clearCurrentLayananState,
-  setCurrentLayananState,
-} = layananSlice.actions;
-export default layananSlice.reducer;
+  clearPaketLayananState,
+  setPaketLayananData,
+  setPaketLayananError,
+  setPaketLayananLoading,
+  clearCurrentPaketLayananState,
+  setCurrentPaketLayananState,
+} = paketLayananSlice.actions;
+export default paketLayananSlice.reducer;

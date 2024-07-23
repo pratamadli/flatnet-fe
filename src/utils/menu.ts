@@ -7,7 +7,12 @@ export const menuList = [
       {
         href: "/admin/verifikasi-pemesanan",
         icon: "verification",
-        label: "Verfifikasi",
+        label: "Verifikasi",
+      },
+      {
+        href: "/admin/profile",
+        icon: "profile",
+        label: "Profile",
       },
     ],
   },
@@ -21,6 +26,11 @@ export const menuList = [
         icon: "verification",
         label: "Riwayat Layanan",
       },
+      {
+        href: "/pelanggan/profile",
+        icon: "profile",
+        label: "Profile",
+      },
     ],
   },
   {
@@ -29,6 +39,11 @@ export const menuList = [
       { href: "/petugas/dashboard", icon: "dashboard", label: "Dashboard" },
       { href: "/petugas/jadwal", icon: "verification", label: "Jadwal" },
       { href: "/petugas/layanan", icon: "verification", label: "Layanan" },
+      {
+        href: "/petugas/profile",
+        icon: "profile",
+        label: "Profile",
+      },
     ],
   },
 ];

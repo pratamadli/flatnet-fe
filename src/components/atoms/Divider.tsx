@@ -3,7 +3,7 @@ import colors from "@/styles/colors";
 const Divider = () => {
   return (
     <hr
-      className="my-4 "
+      className="my-2"
       style={{ backgroundColor: colors.darkgray, color: colors.darkgray }}
     />
   );

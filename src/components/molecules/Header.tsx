@@ -9,39 +9,36 @@ const Header: React.FC<HeaderProps> = ({ title, name = "Admin" }) => {
 
   // Get the pathname and remove the trailing slash if it exists
   const pathname = url.pathname.replace(/\/$/, "");
-  console.log("PATH NAME", pathname);
+
   // Split the pathname into segments
   const segments = pathname.split("/").filter((segment) => segment !== "");
-  console.log("SEGMENTS", segments);
+
   // Define the base breadcrumb
   let breadcrumb = ["Dashboard"];
-
-  console.log("BREADCRUMP 1", breadcrumb);
 
   // Add other segments to the breadcrumb, capitalizing the first letter of each segment
   breadcrumb = breadcrumb.concat(
     segments.slice(1).map((segment) => {
-      return segment.charAt(0).toUpperCase() + segment.slice(1);
+      return segment
+        .split("-") // Split by hyphen
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
+        .join(" "); // Join the words back with a space
     })
   );
 
-  console.log("BREADCRUMP 2", breadcrumb);
-
   // Join the breadcrumb parts with " > "
-  const joinBreadrump = breadcrumb.join(" > ");
-
-  console.log("BREADCRUMP 3", joinBreadrump);
+  const joinBreadcrumb = breadcrumb.join(" > ");
 
   return (
     <div>
-      {joinBreadrump === "Dashboard > Dashboard" ? (
+      {joinBreadcrumb === "Dashboard > Dashboard" ? (
         <div>
           <h1 className="text-2xl font-semibold">Welcome back, {name}</h1>
         </div>
       ) : (
         <div>
           <h1 className="text-2xl font-semibold">{title}</h1>
-          <div className="text-sm font-light">{joinBreadrump}</div>
+          <div className="text-sm font-light">{joinBreadcrumb}</div>
         </div>
       )}
     </div>

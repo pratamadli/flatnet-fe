@@ -1,8 +1,8 @@
 // Import necessary modules
-import React from 'react';
-import { useAuth } from '@/utils/AuthContext';
-import Link from 'next/link'; // Import Next.js Link component
-import Image from 'next/image';
+import React from "react";
+import { useAuth } from "@/utils/AuthContext";
+import Link from "next/link"; // Import Next.js Link component
+import Image from "next/image";
 
 // Define types for menu items
 interface MenuItem {
@@ -16,7 +16,9 @@ interface MenuItems {
 }
 
 // Define the DashboardLayout component
-const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   // Retrieve user information from authentication context
   const { user, logout } = useAuth();
 
@@ -28,19 +30,19 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
   // Define menu items for different user roles
   const menuItems: MenuItems = {
     admin: [
-      { name: 'Dashboard', href: '/dashboard' },
-      { name: 'Users', href: '/dashboard/users' },
-      { name: 'Verifikasi Pemesanan', href: '/dashboard/verifikasi-pemesanan' },
+      { name: "Dashboard", href: "/dashboard" },
+      { name: "Users", href: "/dashboard/users" },
+      { name: "Verifikasi Pemesanan", href: "/dashboard/verifikasi-pemesanan" },
     ],
     petugas: [
-      { name: 'Dashboard', href: '/dashboard' },
-      { name: 'Jadwal', href: '/dashboard/jadwal' },
-      { name: 'Layanan', href: '/dashboard/layanan' },
+      { name: "Dashboard", href: "/dashboard" },
+      { name: "Jadwal", href: "/dashboard/jadwal" },
+      { name: "Layanan", href: "/dashboard/layanan" },
     ],
     pelanggan: [
-      { name: 'Dashboard', href: '/dashboard' },
-      { name: 'Layanan', href: '/dashboard/layanan' },
-      { name: 'Riwayat Layanan', href: '/dashboard/riwayat-layanan' },
+      { name: "Dashboard", href: "/dashboard" },
+      { name: "Layanan", href: "/dashboard/layanan" },
+      { name: "Riwayat Layanan", href: "/dashboard/riwayat-layanan" },
     ],
   };
 
@@ -54,9 +56,13 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
           <span className="text-xl font-bold ml-3">Flat Net</span>
         </div>
         <nav className="flex-grow">
-          {menuItems[user.role as keyof MenuItems]?.map((item) => (
-            <Link key={item.name} href={item.href} passHref> {/* Add passHref prop */}
-              <a className="block px-4 py-2 rounded hover:bg-blue-700">{item.name}</a>
+          {menuItems[user.roleName as keyof MenuItems]?.map((item) => (
+            <Link key={item.name} href={item.href} passHref>
+              {" "}
+              {/* Add passHref prop */}
+              <a className="block px-4 py-2 rounded hover:bg-blue-700">
+                {item.name}
+              </a>
             </Link>
           ))}
         </nav>
@@ -70,7 +76,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
               className="rounded-full"
             />
             <div className="ml-4">
-              <p className="font-medium">{user.role}</p>
+              <p className="font-medium">{user.roleName}</p>
               <p className="text-sm text-gray-400">admin@mail.com</p>
             </div>
           </div>
@@ -84,7 +90,9 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
       </aside>
 
       {/* Main Content */}
-      <main className="flex-grow p-6 bg-gray-100 overflow-auto">{children}</main>
+      <main className="flex-grow p-6 bg-gray-100 overflow-auto">
+        {children}
+      </main>
     </div>
   );
 };

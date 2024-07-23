@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "@/components/organisms/Sidebar";
+import { Sidebar } from "@/components/organisms";
 import { useAuth } from "@/utils/AuthContext";
 import { Header } from "../molecules";
 

@@ -48,6 +48,14 @@ const usersSlice = createSlice({
     clearUserCurrentData(state) {
       state.currentData = null;
     },
+    setPetugasData(state, action: PayloadAction<ReturnState>) {
+      state.success = action.payload.success;
+      state.data = action.payload.data;
+      state.message = action.payload.message;
+      state.date_start = action.payload.date_start;
+      state.date_end = action.payload.date_end;
+      state.description = action.payload.description;
+    },
   },
 });
 
@@ -58,5 +66,6 @@ export const {
   setUsersLoading,
   setUserCurrentData,
   clearUserCurrentData,
+  setPetugasData,
 } = usersSlice.actions;
 export default usersSlice.reducer;

@@ -2,8 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 
 interface AuthContextProps {
-  user: { roleName: string; token: string; nama: string } | null;
-  login: (roleName: string, token: string, nama: string) => void;
+  user: { roleName: string; token: string; nama: string; email: string } | null;
+  login: (roleName: string, token: string, nama: string, email: string) => void;
   logout: () => void;
 }
 
@@ -16,6 +16,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     roleName: string;
     token: string;
     nama: string;
+    email: string;
   } | null>(null);
   const router = useRouter();
 
@@ -26,8 +27,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, []);
 
-  const login = (roleName: string, token: string, nama: string) => {
-    const user = { roleName, token, nama };
+  const login = (
+    roleName: string,
+    token: string,
+    nama: string,
+    email: string
+  ) => {
+    const user = { roleName, token, nama, email };
     setUser(user);
     localStorage.setItem("user", JSON.stringify(user));
     router.push(`/${roleName}/dashboard`);

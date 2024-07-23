@@ -1,27 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { LogoutButton, NavItems, UserProfileCard } from "../molecules";
-import { Divider, Logo } from "../atoms";
+import { Button, Divider, Logo } from "../atoms";
 import { useAuth } from "@/utils/AuthContext";
 import { menuList } from "@/utils/menu";
 import colors from "@/styles/colors";
 import { logoutThunk } from "@/redux/thunk/authThunk";
 import { useAppDispatch } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { user, logout } = useAuth();
   const currentRole = user?.roleName;
-  console.log("currentRole", currentRole);
   const menuItems =
     menuList.find((menu) => menu.role === currentRole)?.menu || [];
   const handleLogout = async () => {
     const loggedOut = await dispatch(logoutThunk());
-    console.log("LOGGED OUT", loggedOut);
     const payload = loggedOut.payload;
     if (payload.success) {
       await logout();
     } else {
       alert(payload.error);
     }
+  };
+  const router = useRouter();
+
+  const onClickProfile = () => {
+    router.push(`/${currentRole}/profile`);
   };
   return (
     <aside
@@ -33,20 +37,31 @@ const Sidebar: React.FC = () => {
         className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800"
         style={{ backgroundColor: colors.darkBlue }}
       >
-        <div className="flex justify-start items-center mb-6">
+        <div className="flex justify-start items-center mb-6 px-6">
           {" "}
-          <Logo fontStyle="font-semibold text-3xl" height={88} width={88} />
+          <Logo fontStyle="font-semibold text-3xl" height={100} width={100} />
         </div>
         <ul className="space-y-1">
           {menuItems.map((item) => (
             <li key={item.href}>
-              <NavItems href={item.href} icon={item.icon} label={item.label} />
+              <NavItems
+                href={item.href}
+                icon={item.icon}
+                label={item.label}
+                email={user?.email || ""}
+                name={user?.nama || ""}
+                onClickProfile={onClickProfile}
+              />
             </li>
           ))}
+
+          {/* <div className="mt-6" onClick={onClickProfile}>
+            <UserProfileCard
+              email={user?.email || ""}
+              name={user?.nama || ""}
+            />
+          </div> */}
         </ul>
-        <div className="mt-6">
-          <UserProfileCard email="dummy@mail.com" name="dummy" />
-        </div>
       </div>
       <div className="px-3 pb-4">
         <LogoutButton onClick={handleLogout} />

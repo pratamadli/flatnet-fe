@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import { BaseMenu } from "../../../components/layouts";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/rootReducer";
-import { getUsersThunk, setCurrentUserThunk } from "@/redux/thunk/usersThunk";
+import {
+  deleteUserThunk,
+  getUsersThunk,
+  setCurrentUserThunk,
+} from "@/redux/thunk/usersThunk";
 import { useAuth } from "@/utils/AuthContext";
 import { Table } from "@/components/organisms";
 import { Button, Label } from "@/components/atoms";
 import { useRouter } from "next/router";
 import colors from "@/styles/colors";
 import { clearUserCurrentData } from "@/redux/slices";
-import { UserDeleteModal } from "@/components/organisms/UserDeleteModal";
+import { UserDeleteModal } from "@/components/organisms";
 
 const UsersList = () => {
   const route = useRouter();
@@ -32,7 +36,7 @@ const UsersList = () => {
         return (
           <div className="flex row-auto justify-end">
             <Button width="quarter" onClick={() => handleEditData(e)}>
-              <Label color={colors.darkBlue}>Edit</Label>
+              <Label color={colors.primary}>Edit</Label>
             </Button>
             <Button width="quarter" onClick={() => handleDeleteData(e)}>
               <Label color={colors.darkgray}>Hapus</Label>
@@ -53,8 +57,26 @@ const UsersList = () => {
     setModalVisible(false);
   };
 
-  const handleOnDelete = () => {
+  const handleOnDelete = async () => {
     console.log("Delete User ID", deleteId);
+    await dispatch(deleteUserThunk(deleteId))
+      .then(async (data) => {
+        if (data.payload.success) {
+          await getUsers();
+          setModalVisible(false);
+          alert(data.payload.message);
+        } else {
+          if (data.payload.message === "jwt expired") {
+            alert("SESSION EXPIRED");
+            logout();
+          } else {
+            console.log("ERROR GET USERS", data.payload);
+          }
+        }
+      })
+      .catch((error) => {
+        console.log("ERROR PAYLOAD", error);
+      });
   };
 
   const getUsers = async () => {
@@ -93,7 +115,7 @@ const UsersList = () => {
   useEffect(() => {
     getUsers();
     clearCurrentData();
-  }, []);
+  }, [usersList]);
 
   return (
     <div>

@@ -4,7 +4,7 @@ import { FormInput } from "../molecules";
 import colors from "@/styles/colors";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { createUserThunk } from "@/redux/thunk/usersThunk";
+import { createUserThunk, updateUserThunk } from "@/redux/thunk/usersThunk";
 import { CurrentUserDataPayload } from "@/redux/types";
 
 interface SelectOption {
@@ -22,6 +22,7 @@ const UserForm: React.FC<UserFormProps> = ({ options, currentData }) => {
   const dispatch = useAppDispatch();
   const handleBatal = () => {
     setFormData({
+      userId: "",
       nama: "",
       nik: "",
       noTelp: "",
@@ -36,6 +37,7 @@ const UserForm: React.FC<UserFormProps> = ({ options, currentData }) => {
   useEffect(() => {
     if (currentData) {
       setFormData({
+        userId: currentData?.userId?.toString() || "",
         nama: currentData?.nama || "",
         nik: currentData?.nik || "",
         noTelp: currentData?.noTelp || "",
@@ -50,18 +52,31 @@ const UserForm: React.FC<UserFormProps> = ({ options, currentData }) => {
     const invalid = await validation();
 
     if (!invalid) {
-      const createUser = await dispatch(createUserThunk(formData));
-      const payload = createUser.payload;
+      if (formData.userId !== "") {
+        const createUser = await dispatch(createUserThunk(formData));
+        const payload = createUser.payload;
 
-      if (payload.success) {
-        alert("Create User Success");
-        routes.push("/admin/users");
+        if (payload.success) {
+          alert("Create User Success");
+          routes.push("/admin/users");
+        } else {
+          alert(payload.message);
+        }
       } else {
-        alert(payload.message);
+        const updateUser = await dispatch(updateUserThunk(formData));
+        const payload = updateUser.payload;
+
+        if (payload.success) {
+          alert("Update User Success");
+          routes.push("/admin/users");
+        } else {
+          alert(payload.message);
+        }
       }
     }
   };
   const [formData, setFormData] = useState({
+    userId: "",
     nama: "",
     nik: "",
     noTelp: "",

@@ -48,4 +48,22 @@ const deleteUserApi = async (id: string, token: string) => {
   });
 };
 
-export { getUsersApi, createUserApi, updateUserApi, deleteUserApi };
+const getPetugasAllApi = async (token: string) => {
+  if (!token) {
+    throw new Error("No access token found");
+  }
+
+  return await axios.get(`${apiUrl}/user/petugas`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export {
+  getUsersApi,
+  createUserApi,
+  updateUserApi,
+  deleteUserApi,
+  getPetugasAllApi,
+};

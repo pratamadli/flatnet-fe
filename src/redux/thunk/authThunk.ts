@@ -64,6 +64,7 @@ export const getAuthThunk = createAsyncThunk(
     thunksAPI.dispatch(setAuthLoading(true));
     try {
       const response = await getAuthApi(token);
+      console.log("RESPONSE", response);
       thunksAPI.dispatch(setAuthData(response.data));
       return response.data;
     } catch (error) {
