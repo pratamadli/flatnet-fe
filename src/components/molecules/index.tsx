@@ -6,6 +6,8 @@ import LogoutButton from "./LogoutButton";
 import { Header } from "./Header";
 import AddNewButton from "./AddNewButton";
 import { ValueCard } from "./ValueCard";
+import { LayananCard } from "./LayananCard";
+import { PaketLayananCard } from "./PaketLayananCard";
 
 export {
   CenteredFooter,
@@ -16,4 +18,6 @@ export {
   Header,
   AddNewButton,
   ValueCard,
+  LayananCard,
+  PaketLayananCard
 };

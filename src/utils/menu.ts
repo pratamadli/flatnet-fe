@@ -23,7 +23,7 @@ export const menuList = [
       { href: "/pelanggan/layanan", icon: "verification", label: "Layanan" },
       {
         href: "/pelanggan/riwayat-layanan",
-        icon: "verification",
+        icon: "buffer",
         label: "Riwayat Layanan",
       },
       {
@@ -37,7 +37,7 @@ export const menuList = [
     role: "petugas",
     menu: [
       { href: "/petugas/dashboard", icon: "dashboard", label: "Dashboard" },
-      { href: "/petugas/jadwal", icon: "verification", label: "Jadwal" },
+      { href: "/petugas/jadwal", icon: "buffer", label: "Jadwal" },
       { href: "/petugas/layanan", icon: "verification", label: "Layanan" },
       {
         href: "/petugas/profile",

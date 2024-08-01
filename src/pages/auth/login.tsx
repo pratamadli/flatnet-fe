@@ -143,42 +143,9 @@ const Login = () => {
                 </Button>
               </div>
             </Form>
-            {/* <form className="w-full max-w-md space-y-6">
-              <FormInput
-                label="Email"
-                id="email"
-                placeholder="Masukkan Email"
-                type="email"
-                autoComplete="email"
-                required={true}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <FormInput
-                label="Password"
-                id="password"
-                placeholder="Masukkan Password"
-                type="password"
-                autoComplete="current-password"
-                required={true}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-
-              <div>
-                <Button onClick={handleLogin}>Sign In</Button>
-              </div>
-            </form> */}
 
             <p className="mt-10 text-center text-sm text-gray-500">
               Belum punya akun? &nbsp;
-              {/* <a
-                href="/register"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Daftar Akun
-              </a> */}
               <Button
                 href="/auth/register"
                 className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

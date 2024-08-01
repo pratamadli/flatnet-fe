@@ -11,6 +11,8 @@ const colors = {
   darkBlue: "#012970",
   white: "#FFFFFF",
   lightgray: "#D0D5DD",
+  lightPurple: "#6941C6",
+  lightPrimary: "#ECEEFE",
 };
 
 export default colors;

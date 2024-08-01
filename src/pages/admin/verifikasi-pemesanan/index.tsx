@@ -19,6 +19,7 @@ const VerifikasiPemesanan = () => {
   const columns = [
     { header: "Pelanggan", accessor: "namaPelanggan", searchable: true },
     { header: "Paket", accessor: "namaPaket", searchable: true },
+    { header: "Alamat", accessor: "alamatPelanggan", searchable: true },
     { header: "Jadwal", accessor: "waktuPemasangan", searchable: true },
     { header: "Status", accessor: "namaStatus", searchable: true },
     {

@@ -31,7 +31,8 @@ import { CardBody } from "./CardBody";
 import { CardFooter } from "./CardFooter";
 import { CardHeader } from "./CardHeader";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "./Modal";
-
+import Row from "./Row";
+import Column from "./Column";
 export {
   Background,
   Button,
@@ -58,4 +59,6 @@ export {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  Row,
+  Column,
 };

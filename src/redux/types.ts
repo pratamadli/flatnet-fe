@@ -63,6 +63,7 @@ export interface LayananFilterPayload {
   petugasId?: string | number;
   paketLayananId?: string | number;
   status?: string;
+  withoutStatus?: string;
 }
 
 export interface CurrentLayananPayload {

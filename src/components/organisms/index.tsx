@@ -10,7 +10,9 @@ import { TolakModal } from "./TolakModal";
 import { UserDeleteModal } from "./UserDeleteModal";
 import { AdminValueInformation } from "./AdminValueInformaton";
 import Sidebar from "./Sidebar";
-
+import { LayananSection } from "./LayananSection";
+import { PaketLayananSection } from "./PaketLayananSection";
+import { PilihPaketSection } from "./PilihPaketSection";
 export {
   Banner,
   Footer,
@@ -24,4 +26,7 @@ export {
   UserDeleteModal,
   AdminValueInformation,
   Sidebar,
+  LayananSection,
+  PaketLayananSection,
+  PilihPaketSection,
 };

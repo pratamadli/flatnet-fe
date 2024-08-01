@@ -1,4 +1,3 @@
-// src/pages/admin/dashboard.tsx
 import React, { useEffect, useState } from "react";
 import { BaseMenu } from "../../components/layouts";
 import { useAppDispatch } from "@/redux/hooks";
@@ -25,37 +24,15 @@ const Dashboard = () => {
     totalLayanan: 0,
     totalPelanggan: 0,
     totalUser: 0,
+    monthlyData: [],
+    yearDataByStatus: [],
   });
-  const dataLine = [
-    ["Bulan", "2023", "2024"],
-    ["January", 5, 6],
-    ["February", 8, 9],
-    ["March", 12, 13],
-    ["April", 15, 16],
-    ["May", 18, 22],
-    ["June", 20, 45],
-    ["July", 19, 33],
-    ["August", 16, 22],
-    ["September", 13, 34],
-    ["October", 9, 12],
-    ["November", 6, 9],
-    ["December", 4, 0],
-  ];
 
   const optionsLine = {
     title: "Total Pemasangan",
-    curveType: "function",
+    curveType: "line",
     legend: "none",
   };
-
-  const dataDonut = [
-    ["Task", "Hours per Day"],
-    ["Work", 11],
-    ["Eat", 2],
-    ["Commute", 2],
-    ["Watch TV", 2],
-    ["Sleep", 7], // CSS-style declaration
-  ];
 
   const optionsDonut = {
     title: "My Daily Activities",
@@ -98,14 +75,14 @@ const Dashboard = () => {
         <Chart
           chartType="PieChart"
           height="400px"
-          data={dataDonut}
+          data={dataDashboard.yearDataByStatus}
           options={optionsDonut}
         />
         <Chart
           chartType="LineChart"
           width="800px"
           height="400px"
-          data={dataLine}
+          data={dataDashboard.monthlyData}
           options={optionsLine}
         />
       </div>
