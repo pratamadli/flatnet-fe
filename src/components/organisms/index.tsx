@@ -13,6 +13,7 @@ import Sidebar from "./Sidebar";
 import { LayananSection } from "./LayananSection";
 import { PaketLayananSection } from "./PaketLayananSection";
 import { PilihPaketSection } from "./PilihPaketSection";
+import { PilihJadwalSection } from "./PilihJadwalSection";
 export {
   Banner,
   Footer,
@@ -29,4 +30,5 @@ export {
   LayananSection,
   PaketLayananSection,
   PilihPaketSection,
+  PilihJadwalSection,
 };

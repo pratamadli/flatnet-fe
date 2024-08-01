@@ -33,6 +33,7 @@ import { CardHeader } from "./CardHeader";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "./Modal";
 import Row from "./Row";
 import Column from "./Column";
+import { DateTimePicker } from "./DateTimePicker";
 export {
   Background,
   Button,
@@ -61,4 +62,5 @@ export {
   ModalHeader,
   Row,
   Column,
+  DateTimePicker,
 };
